@@ -2,6 +2,7 @@ package org.example.sandbox.cards;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class StandardDeck implements Deck{
@@ -28,36 +29,50 @@ public class StandardDeck implements Deck{
 
     @Override
     public void shuffle() {
-
+        Collections.shuffle(cards);
     }
 
     @Override
     public void cut(int index) {
+        List<Card> top = cards.subList(0, index);
+        List<Card> bottom = cards.subList(index, cards.size());
 
+        this.cards.clear();
+
+        cards.addAll(bottom);
+        cards.addAll(top);
     }
 
     @Override
     public Card deal() {
-        return null;
+        return this.cards.removeFirst();
     }
 
     @Override
     public Card turnOver() {
-        return null;
+        return this.cards.getFirst();
     }
 
     @Override
     public int search(Card card) {
-        return 0;
+        return this.cards.indexOf(card);
     }
 
     @Override
     public void order() {
+        Collections.sort(this.cards);
+    }
 
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("StandardDeck {");
+        sb.append(cards);
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.cards.size();
     }
 }
